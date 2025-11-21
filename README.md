@@ -58,7 +58,8 @@ A modern, mobile-responsive web application for managing your favorite recipes. 
 
 ### Storage Key
 ### Data Format
-The app stores an array of recipe objects in JSON format:
+**The app stores an array of recipe objects in JSON format:**
+```JSON
 [
 {
 "id": 1,
@@ -81,6 +82,7 @@ The app stores an array of recipe objects in JSON format:
 "imageUrl": "https://example.com/image.jpg"
 }
 ]
+```
 
 ### Field Descriptions
 
@@ -103,13 +105,12 @@ The app stores an array of recipe objects in JSON format:
 
 
 ## 📁 Project Structure
-recipe-manager/
+Recipe-Manager/
 ├── index.html # Main HTML file with UI structure
-├ recipes.js # Data management & localStorage operations
-├ ui.js # UI rendering & DOM manipulation
-├ app.js # Main application controller
-└── README.md # Project documentation  
-
+├── recipes.js # Data management & localStorage operations
+├── ui.js # UI rendering & DOM manipulation
+├── app.js # Main application controller
+└── README.md # Project documentation
 
 ### File Responsibilities
 
