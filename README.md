@@ -270,28 +270,6 @@ A modern, mobile-responsive web application for managing your favorite recipes. 
 
 ---
 
-## 🔮 Future Enhancements
-
-### Planned Features (v1.1)
-
-- [ ] Export/Import recipes as JSON
-- [ ] Print recipe view
-- [ ] Recipe rating system
-- [ ] Ingredient quantity calculator (portion scaling)
-- [ ] Shopping list generator
-- [ ] Recipe tags and categories
-
-### Under Consideration
-
-- [ ] Dark mode theme
-- [ ] Recipe sharing via URL
-- [ ] Image upload functionality
-- [ ] Ingredient substitution suggestions
-- [ ] Nutritional information calculator
-- [ ] Multi-language support
-- [ ] Backend integration with Firebase/MongoDB
-
----
 
 ## 🛠️ Technologies Used
 
@@ -304,4 +282,3 @@ A modern, mobile-responsive web application for managing your favorite recipes. 
 
 ---
 
-**Happy Cooking! 🍽️**
