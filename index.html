@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuBtn"
+        class="fixed top-4 left-4 z-50 lg:hidden bg-teal-500 text-white p-3 rounded-lg shadow-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Overlay for mobile -->
+    <div id="mobileOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed left-0 top-0 w-64 h-full bg-slate-900 text-white shadow-lg flex flex-col z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <!-- Close button for mobile -->
+        <button id="closeSidebarBtn" class="absolute top-4 right-4 lg:hidden text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-slate-700">
+            <div class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-lg">🍳</div>
+            <div>
+                <div class="font-bold text-lg">Recipe Manager</div>
+                <div class="text-xs text-gray-400">Your Kitchen Companion</div>
+            </div>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2 px-4">
+            <a href="#" data-view="home"
+                class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-white font-medium bg-slate-800 hover:bg-gray-700/50 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Home</span>
+            </a>
+
+            <a href="#" data-view="add-recipe"
+                class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 font-medium hover:bg-gray-700/50 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Add Recipe</span>
+            </a>
+
+            <a href="#" data-view="all-recipes"
+                class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 font-medium hover:bg-gray-700/50 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span>All Recipes</span>
+            </a>
+        </nav>
+
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="lg:ml-64 p-4 sm:p-6 pt-20 lg:pt-6">
+
+        <!-- HOME VIEW -->
+        <div id="homeView" class="view-container">
+            <!-- Search bar -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6">
+                <input type="text" id="searchInput" placeholder="Search recipes..."
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base">
+                <button id="searchBtn"
+                    class="bg-teal-500 text-white px-6 py-2 rounded hover:bg-teal-600 transition font-medium text-sm sm:text-base">
+                    Search
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="statsCards">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Filter by Difficulty -->
+            <div class="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 mb-6">
+                <span class="font-medium text-gray-700 text-sm sm:text-base">Filter by Difficulty</span>
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                    <button class="filter-btn px-3 py-2 rounded bg-teal-600 text-white font-medium text-xs sm:text-sm"
+                        data-difficulty="all">All</button>
+                    <button
+                        class="filter-btn px-3 py-2 rounded bg-gray-300 text-gray-800 font-medium text-xs sm:text-sm"
+                        data-difficulty="Easy">Easy</button>
+                    <button
+                        class="filter-btn px-3 py-2 rounded bg-gray-300 text-gray-800 font-medium text-xs sm:text-sm"
+                        data-difficulty="Medium">Medium</button>
+                    <button
+                        class="filter-btn px-3 py-2 rounded bg-gray-300 text-gray-800 font-medium text-xs sm:text-sm"
+                        data-difficulty="Hard">Hard</button>
+                </div>
+            </div>
+
+            <!-- Recipe List -->
+            <section>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Your Recipes</h2>
+                    <button data-view="add-recipe"
+                        class="quick-add-btn w-full sm:w-auto bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition font-medium text-sm sm:text-base">
+                        + Add New Recipe
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+                    id="recipeList">
+                    <!-- Recipe cards rendered by JS -->
+                </div>
+            </section>
+        </div>
+
+        <!-- ADD/EDIT RECIPE VIEW -->
+        <div id="addRecipeView" class="view-container hidden">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800" id="formTitle">Add New Recipe</h2>
+                        <button data-view="home" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form id="recipeForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Recipe Title *</label>
+                            <input type="text" name="title" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Description *</label>
+                            <textarea name="description" rows="3" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Prep Time (min) *</label>
+                                <input type="number" name="prepTime" required min="1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Cook Time (min) *</label>
+                                <input type="number" name="cookTime" required min="1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Total Time (min) *</label>
+                                <input type="number" name="totalTime" required min="1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Ingredients (one per line)
+                                *</label>
+                            <textarea name="ingredients" rows="4" required
+                                placeholder="Rice&#10;Vegetables&#10;Spices&#10;Oil"
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Steps (one per line) *</label>
+                            <textarea name="steps" rows="5" required
+                                placeholder="Heat oil in pan&#10;Add spices&#10;Add vegetables&#10;Add rice and water&#10;Cook until done"
+                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Difficulty *</label>
+                                <select name="difficulty" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                    <option value="">Select difficulty</option>
+                                    <option value="Easy">Easy</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Hard">Hard</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1 text-gray-700">Image URL</label>
+                                <input type="url" name="imageUrl" placeholder="https://example.com/image.jpg"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-3 pt-4">
+                            <button type="submit"
+                                class="flex-1 bg-teal-500 text-white px-6 py-3 rounded hover:bg-teal-600 font-medium">
+                                Save Recipe
+                            </button>
+                            <button type="button" data-view="home"
+                                class="flex-1 bg-gray-300 text-gray-800 px-6 py-3 rounded hover:bg-gray-400 font-medium">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ALL RECIPES VIEW -->
+        <div id="allRecipesView" class="view-container hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">All Recipes</h2>
+                <button data-view="home"
+                    class="flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition font-medium">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span>Back to Home</span>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+                id="allRecipesList">
+                <!-- All recipes rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 py-6 border-t border-gray-200 text-center">
+            <div class="container mx-auto px-4">
+                <p class="text-sm text-gray-600">&copy; 2025 Recipe Manager. All rights reserved.</p>
+                <p class="text-xs text-gray-500 mt-2">Made with ❤️ for food lovers</p>
+            </div>
+        </footer>
+
+    </main>
+
+
+    <!-- Scripts -->
+    <script src="recipes.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Mobile Menu & View Navigation Script -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            mobileOverlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            mobileOverlay.classList.add('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        mobileOverlay.addEventListener('click', closeSidebar);
+
+        // View Navigation System with callback support
+        window.switchView = function (viewName, callback) {
+            // Hide all views
+            document.querySelectorAll('.view-container').forEach(view => {
+                view.classList.add('hidden');
+            });
+
+            // Show selected view
+            const viewMap = {
+                'home': 'homeView',
+                'add-recipe': 'addRecipeView',
+                'all-recipes': 'allRecipesView'
+            };
+
+            const targetView = document.getElementById(viewMap[viewName]);
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+
+            // Update nav active state
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.dataset.view === viewName) {
+                    link.classList.add('bg-slate-800');
+                } else {
+                    link.classList.remove('bg-slate-800');
+                }
+            });
+
+            // Close sidebar on mobile after navigation
+            if (window.innerWidth < 1024) {
+                closeSidebar();
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            // Execute callback after view is rendered
+            if (callback && typeof callback === 'function') {
+                setTimeout(callback, 50);
+            }
+        };
+
+        // Add click listeners to all navigation links
+        document.querySelectorAll('[data-view]').forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                const view = e.currentTarget.dataset.view;
+
+                // Reset form if going to add recipe view (but not when editing)
+                if (view === 'add-recipe' && !window.isEditingRecipe) {
+                    switchView(view, () => {
+                        const form = document.getElementById('recipeForm');
+                        if (form) form.reset();
+                        const formTitle = document.getElementById('formTitle');
+                        if (formTitle) formTitle.textContent = 'Add New Recipe';
+                    });
+                } else {
+                    switchView(view);
+                }
+            });
+        });
+
+        // Initialize with home view
+        switchView('home');
+    </script>
+</body>
+
+</html>
