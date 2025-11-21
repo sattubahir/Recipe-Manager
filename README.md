@@ -2,9 +2,11 @@
 
 A modern, mobile-responsive web application for managing your favorite recipes. Built with vanilla JavaScript, HTML, and Tailwind CSS with localStorage for data persistence.
 
-![Recipe Manager](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+## 🌐 Live Demo
 
+**[View Live Demo](https://sattubahir.github.io/Recipe-Manager/)**
+
+---
 ## 📋 Table of Contents
 
 - [Features](#features)
@@ -78,7 +80,7 @@ A modern, mobile-responsive web application for managing your favorite recipes. 
 "prepTime": 15, // in minutes
 "cookTime": 25, // in minutes
 "totalTime": 40, // in minutes
-"difficulty": "easy", // values: "easy", "medium", "hard"
+"difficulty": "easy", // values: "Easy", "Medium", "Hard"
 "imageUrl": "https://example.com/image.jpg"
 }
 ]
@@ -103,14 +105,6 @@ A modern, mobile-responsive web application for managing your favorite recipes. 
 
 **View in Browser Console:**
 
-
-## 📁 Project Structure
-Recipe-Manager/
-├── index.html # Main HTML file with UI structure
-├── recipes.js # Data management & localStorage operations
-├── ui.js # UI rendering & DOM manipulation
-├── app.js # Main application controller
-└── README.md # Project documentation
 
 ### File Responsibilities
 
@@ -240,8 +234,6 @@ Recipe-Manager/
 
 ## 🐛 Known Issues
 
-### Critical Issues
-
 1. **localStorage Quota**
    - **Issue**: Browser may reject new recipes if localStorage limit exceeded
    - **Workaround**: Delete unused recipes regularly
@@ -254,35 +246,21 @@ Recipe-Manager/
 
 ### Minor Issues
 
-1. **Case Sensitivity in Search**
-   - **Issue**: Search is case-sensitive ("Biryani" ≠ "biryani")
-   - **Workaround**: Use lowercase search terms
-   - **Status**: Fix planned for v1.1
-
-2. **Mobile Keyboard Overlap**
+1. **Mobile Keyboard Overlap**
    - **Issue**: On some mobile devices, keyboard overlaps form inputs
    - **Workaround**: Scroll manually after keyboard appears
    - **Status**: Investigating
 
-3. **Long Recipe Names**
+2. **Long Recipe Names**
    - **Issue**: Very long titles may overflow card layout
    - **Workaround**: Keep titles under 50 characters
    - **Status**: CSS truncation to be added
 
-4. **Browser Back Button**
+3. **Browser Back Button**
    - **Issue**: Browser back button doesn't work with view navigation
    - **Workaround**: Use in-app navigation
    - **Status**: Would require URL routing (not planned)
 
-5. **Rapid Click Issues**
-   - **Issue**: Clicking buttons rapidly may cause duplicate actions
-   - **Workaround**: Wait for actions to complete
-   - **Status**: Debouncing to be added
-
-6. **Stats Card Sync**
-   - **Issue**: Stats occasionally don't update immediately after deletion
-   - **Workaround**: Refresh the page
-   - **Status**: Fixed in testing, monitoring
 
 ### Browser-Specific Issues
 
