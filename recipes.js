@@ -191,7 +191,71 @@ const RecipeStorage = (() => {
   totalTime: 70,
   difficulty: 'Medium',
       imageUrl: 'https://www.travellersofindia.com/wp-content/uploads/2023/06/Puran_Poli_Travellersofindia.com_.jpeg'
-    }
+    },
+    {
+  id: 5,
+  title: 'Hyderabadi Chicken Dum Biryani',
+  description: 'Aromatic and royal layered rice dish with marinated chicken, fragrant spices, and saffron, slow-cooked to perfection.',
+  ingredients: [
+    '500g chicken (cut into medium pieces)',
+    '2 cups Basmati rice (soaked for 30 minutes)',
+    '1 cup yogurt (whisked)',
+    '2 large onions (thinly sliced)',
+    '3 tomatoes (chopped)',
+    '2 tablespoons ginger-garlic paste',
+    '4-5 green chilies (slit)',
+    '1/2 cup fresh mint leaves',
+    '1/2 cup fresh coriander leaves',
+    '1 teaspoon red chili powder',
+    '1/2 teaspoon turmeric powder',
+    '1 tablespoon biryani masala powder',
+    '1 teaspoon garam masala powder',
+    '4-5 cloves',
+    '2-3 green cardamoms',
+    '2-3 black cardamoms',
+    '1 small cinnamon stick',
+    '1 bay leaf',
+    '1 star anise',
+    '1/2 teaspoon shahi jeera (caraway seeds)',
+    'A pinch of saffron strands (soaked in 1/4 cup warm milk)',
+    '1/2 cup fried onions (birista)',
+    '4 tablespoons ghee',
+    '3 tablespoons oil',
+    'Salt to taste',
+    '1 tablespoon lemon juice',
+    '2 tablespoons rose water or kewra water',
+    '4-5 cups water (for boiling rice)'
+  ],
+  steps: [
+    'Marinate chicken with yogurt, 1 tablespoon ginger-garlic paste, red chili powder, turmeric, biryani masala, lemon juice, half of mint and coriander leaves, and salt. Refrigerate for at least 1 hour',
+    'Heat 3 tablespoons oil in a heavy-bottomed pan. Deep fry thinly sliced onions until golden brown and crispy. Remove and set aside for birista',
+    'In the same pan with remaining oil, add whole spices (cloves, cardamoms, cinnamon, bay leaf, star anise, shahi jeera) and let them crackle',
+    'Add remaining ginger-garlic paste and green chilies. Sauté for 1 minute',
+    'Add chopped tomatoes and cook until soft and oil separates (about 5-7 minutes)',
+    'Add the marinated chicken and cook on high heat for 5 minutes, stirring occasionally',
+    'Reduce heat to low, cover and cook chicken for 15-20 minutes until 70% done. The gravy should be thick, not watery',
+    'Meanwhile, boil 4-5 cups of water in a large pot. Add salt, 2 green cardamoms, 1 bay leaf, and 1 tablespoon ghee',
+    'Add soaked and drained rice. Cook until 70% done (rice should still have a bite). Drain immediately',
+    'For layering: Spread half of the partially cooked chicken gravy in a heavy-bottomed pot',
+    'Layer half of the partially cooked rice over the chicken',
+    'Sprinkle half of the fried onions, remaining mint and coriander leaves, and half of the saffron milk',
+    'Add the remaining chicken and gravy as the next layer',
+    'Top with remaining rice, fried onions, saffron milk, rose water, and dots of ghee',
+    'Cover the pot with aluminum foil, then place a tight-fitting lid on top',
+    'Cook on high heat for 3-4 minutes until you see steam escaping',
+    'Reduce to lowest heat and cook (dum) for 25-30 minutes. Do not open the lid during this time',
+    'Alternatively, after sealing, place the pot in a preheated oven at 180°C (350°F) for 25-30 minutes',
+    'Turn off heat and let it rest for 5 minutes before opening',
+    'Gently mix the biryani from bottom to top using a flat spatula, being careful not to break the rice grains',
+    'Serve hot with raita, shorba, and boiled eggs'
+  ],
+  prepTime: 90,
+  cookTime: 60,
+  totalTime: 150,
+  difficulty: 'Hard',
+  imageUrl: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400'
+}
+
   ];
 
   // Initialize localStorage on first load
@@ -306,7 +370,7 @@ const RecipeStorage = (() => {
     return {
       total: recipes.length,
       Easy: recipes.filter(r => r.difficulty === 'Easy').length,
-      Medium: recipes.filter(r => r.difficulty === 'Medium').length,
+     Medium: recipes.filter(r => r.totalTime && r.totalTime <= 20).length,
       Hard: recipes.filter(r => r.difficulty === 'Hard').length,
       recent: recipes.slice(-4)
     };

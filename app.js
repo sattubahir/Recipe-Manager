@@ -205,32 +205,43 @@ const AppController = (() => {
     });
   };
 
-  // Delete recipe
-  const deleteRecipe = (id) => {
-    if (confirm('Are you sure you want to delete this recipe?')) {
-      try {
-        RecipeStorage.deleteRecipe(id);
-        RecipeUI.showSuccess('Recipe deleted successfully!');
-        
-        // Close modal if open
-        const modal = document.getElementById('recipeModal');
-        if (modal) modal.remove();
-        
-        // Reload recipes
-        loadAndRender();
-      } catch (error) {
-        console.error('Error deleting recipe:', error);
-        RecipeUI.showError('Failed to delete recipe: ' + error.message);
-      }
-    }
-  };
+  // Delete recipe - shows custom modal
+const deleteRecipe = (id) => {
+  const recipe = RecipeStorage.getById(id);
+  if (!recipe) {
+    RecipeUI.showError('Recipe not found');
+    return;
+  }
+  
+  // Show custom confirmation modal
+  RecipeUI.showDeleteConfirm(id, recipe.title);
+};
+// Confirm delete - actually deletes
+const confirmDelete = (id) => {
+  try {
+    RecipeStorage.deleteRecipe(id);
+    RecipeUI.showSuccess('Recipe deleted successfully!');
+    
+    // Close any open modals
+    document.getElementById('recipeModal')?.remove();
+    
+    // Reload recipes
+    loadAndRender();
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    RecipeUI.showError('Failed to delete recipe');
+  }
+};
 
-  return {
-    init,
-    openRecipeDetail,
-    editRecipe,
-    deleteRecipe
-  };
+
+return {
+  init,
+  openRecipeDetail,
+  editRecipe,
+  deleteRecipe,
+  confirmDelete  
+};
+
 })();
 
 // Start app when DOM is ready
