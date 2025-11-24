@@ -56,7 +56,7 @@ const RecipeUI = (() => {
     }
 
     container.innerHTML = recipes.map(recipe => `
-      <div class="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition">
+      <div class="bg-white rounded-lg shadow-sm p-4 transition-all duration-300 hover:shadow-md hover:scale-105 cursor-pointer">
         <div class="cursor-pointer" onclick="AppController.openRecipeDetail(${recipe.id})">
           <img src="${recipe.imageUrl}" alt="${recipe.title}" class="w-full h-48 object-cover">
           <div class="p-4">

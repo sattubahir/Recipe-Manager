@@ -26,6 +26,17 @@ const AppController = (() => {
       searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleSearch();
       });
+              // Debounce function
+        let searchTimer;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                currentSearchQuery = searchInput.value;
+                currentFilter = 'all';
+                loadAndRender();
+            }, 300);
+        });
+
     }
 
     // Filter buttons
@@ -232,6 +243,7 @@ const confirmDelete = (id) => {
     RecipeUI.showError('Failed to delete recipe');
   }
 };
+
 
 
 return {

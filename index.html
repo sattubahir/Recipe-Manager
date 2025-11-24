@@ -336,18 +336,31 @@
             }
         };
 
-        // Add click listeners to all navigation links
+        // Add click listeners to all navigation links      
         document.querySelectorAll('[data-view]').forEach(element => {
             element.addEventListener('click', (e) => {
                 e.preventDefault();
                 const view = e.currentTarget.dataset.view;
+                const form = document.getElementById('recipeForm');
+                const formTitle = document.getElementById('formTitle');
 
+                // Clear form when closing (going back to home or all-recipes)
+                if (view === 'home' || view === 'all-recipes') {
+                    if (form) {
+                        form.reset();
+                        form.removeAttribute('data-edit-id');
+                    }
+                    window.isEditingRecipe = false;
+                    if (formTitle) formTitle.textContent = 'Add New Recipe';
+                    switchView(view);
+                }
                 // Reset form if going to add recipe view (but not when editing)
-                if (view === 'add-recipe' && !window.isEditingRecipe) {
+                else if (view === 'add-recipe' && !window.isEditingRecipe) {
                     switchView(view, () => {
-                        const form = document.getElementById('recipeForm');
-                        if (form) form.reset();
-                        const formTitle = document.getElementById('formTitle');
+                        if (form) {
+                            form.reset();
+                            form.removeAttribute('data-edit-id');
+                        }
                         if (formTitle) formTitle.textContent = 'Add New Recipe';
                     });
                 } else {
@@ -355,6 +368,7 @@
                 }
             });
         });
+
 
         // Initialize with home view
         switchView('home');

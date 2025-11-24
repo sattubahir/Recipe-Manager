@@ -98,7 +98,7 @@ const RecipeStorage = (() => {
   prepTime: 15,
   cookTime: 25,
   totalTime: 40,
-  difficulty: 'Easy',
+  difficulty: 'Medium',
   imageUrl: 'https://www.sharmispassions.com/wp-content/uploads/2015/06/EggCurry5-683x1024.jpg'
     },
     {
